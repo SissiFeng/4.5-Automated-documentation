@@ -1,107 +1,38 @@
-# Bayesian Optimization
-Adapt a Bayesian optimization script to perform color matching.
+# Automated Documentation Assignment
 
-## The assignment
-The tests are failing right now because the [`bayesian_optimization.py`](bayesian_optimization.py) script is not fully implemented. Fixing this up will make the tests green. Wherever you see `...` within the script requires you to write your own code. See below for instructions.
+## Introduction
 
-Refer to [the Ax Service API tutorial](https://ax.dev/tutorials/gpei_hartmann_service.html) if you get stuck.
+This assignment focuses on creating and maintaining documentation for a simple calculator project. You will learn about writing documentation in Markdown, creating docstrings, and using tools like Sphinx and Read the Docs for automated documentation.
 
-### Ax parameter configuration
+## Objectives
 
-Use `"R"`, `"G"`, and `"B"` as the parameter names. Use 0 and 255 as lower and upper
-*integer* bounds, respectively. Note that Python interprets 0.0 and 255.0 as
-continuous variables ("floats"), and 0 and 255 as integers. As an example, the
-2D Branin function parameters would look like:
+By the end of this assignment, you should be able to:
 
-```python
-parameters = [
-   {"name": "x1", "type": "range", "bounds": [-5.0, 10.0]},
-   {"name": "x2", "type": "range", "bounds": [0.0, 10.0]},
-]
-```
+1. Write documentation in Markdown
+2. Understand and explain the concept of "documentation as code"
+3. Write proper docstrings for Python functions
+4. Set up a Read the Docs account and publish a documentation page
 
-Likewise, the parameter configuration for the Hartmann6 function would look like:
-```python
-[
-    {"name": "x1", "type": "range", "bounds": [0.0, 1.0]},
-    {"name": "x2", "type": "range", "bounds": [0.0, 1.0]},
-    {"name": "x3", "type": "range", "bounds": [0.0, 1.0]},
-    {"name": "x4", "type": "range", "bounds": [0.0, 1.0]},
-    {"name": "x5", "type": "range", "bounds": [0.0, 1.0]},
-    {"name": "x6", "type": "range", "bounds": [0.0, 1.0]},
-]
-```
+## Setup
 
-See the ["Set up experiment"](https://ax.dev/tutorials/gpei_hartmann_service.html#2.-Set-up-experiment) section from the Ax Service API tutorial for additional context.
+1. Clone this repository
+2. Install the required packages: `pip install -r requirements.txt`
+3. Familiarize yourself with the project structure
 
-### Using the LightMixer class
+## Tasks
 
-In this assignment, you will use the `run_color_experiment` and `calculate_objective` methods from the [LightMixer](src/mock_light_mixer/_mock_light_mixer.py) class contained in the `mock_light_mixer` package, which comes preinstalled in your Codespace. Here is some example code for how to use it:
+1. Complete the `multiply` and `divide` methods in `src/calculator.py`, including proper docstrings
+2. Implement the corresponding tests in `tests/test_calculator.py`
+3. Update the usage documentation in `docs/usage.md` with examples for all four operations
+4. Set up a Sphinx configuration to generate documentation from your docstrings
+5. Create a Read the Docs account and connect it to your project repository
+6. Publish your documentation on Read the Docs
 
-```python
-from mock_light_mixer import LightMixer
+## Submission
 
-target_color = {"R": 255, "G": 127, "B": 63}
+Provide the following:
 
-parameterization = {"R": 10, "G": 20, "B": 15}
+1. A link to your GitHub repository with the completed project
+2. A link to your published Read the Docs page
 
-mixer = LightMixer(target_color=target_color)
-
-# Use the run_color_experiment method from the instantiated LightMixer class to
-# run an experiment with a certain parameterization
-R = parameterization["R"]
-G = parameterization["G"]
-B = parameterization["B"]
-sensor_data = mixer.run_color_experiment(R, G, B)
-```
-
-Likewise, you can use the `calculate_objective` method to calculate the objective function value for a given parameterization:
-
-```python
-from mock_light_mixer import LightMixer
-
-target_color = {"R": 255, "G": 127, "B": 63}
-
-sensor_data = {
-    "ch410": 102.2,
-    "ch440": 220.4,
-    "ch470": 225.6,
-    "ch510": 178.8,
-    "ch550": 191.6,
-    "ch583": 204.4,
-    "ch620": 217.2,
-    "ch670": 230.0,
-}
-
-mixer = LightMixer(target_color=target_color)
-
-objective_function_value = mixer.calculate_objective(sensor_data)
-```
-
-This objective is the mean absolute error (MAE) between the target sensor data and the observed sensor data. While you do not need to implement this yourself, for your reference, the MAE between the values in two dictionaries with identical keys can be computed as shown below. Note that the keys from `dict1` are used to index the values for both `dict1` and `dict2`.
-
-```python
-from sklearn.metrics import mean_absolute_error
-
-dict1 = {'a': 1, 'b': 2, 'c': 3}
-dict2 = {'a': 1, 'b': 4, 'c': 7}
-
-keys = dict1.keys()
-dict1_values = [dict1[key] for key in keys]
-dict2_values = [dict2[key] for key in keys]
-
-mae = mean_absolute_error(dict1_values, dict2_values)
-print(mae)
-# 2.0
-```
-
-NOTE: the code above assumes the values are all numeric.
-
-### Stuck?
-
-Refer to https://ax.dev/tutorials/gpei_hartmann_service.html and the course tutorial content.
-
-### Run command
-`pytest`
-
-You can also use the "Testing" sidebar extension to easily run individual tests.
+Good luck!
