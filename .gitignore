@@ -1,6 +1,33 @@
-**/__pycache__/
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Testing
 .pytest_cache/
-*.pyc
 .coverage
+htmlcov/
+
+# Sphinx documentation
+docs/_build/
+
+# Virtual environments
+venv/
+env/
+.env
+
+# IDEs
+.vscode/
+.idea/
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Tox
+.tox/
+
+# Distribution / packaging
+dist/
+build/
 *.egg-info/
-bayesian_optimization_solution.py
