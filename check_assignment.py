@@ -3,6 +3,7 @@ import sys
 import importlib
 import pytest
 import re
+import requests
 from sphinx.cmd.build import build_main
 
 def check_calculator_implementation():
@@ -66,6 +67,30 @@ def build_docs():
         print("Documentation build: FAIL")
         return False
 
+def check_readthedocs_link():
+    with open('README.md', 'r') as f:
+        content = f.read()
+    
+    match = re.search(r'\[Read the Docs\]\((https?://.*\.readthedocs\.io/.*)\)', content)
+    
+    if not match:
+        print("Read the Docs link: FAIL - Link not found in README.md")
+        return False
+    
+    link = match.group(1)
+    
+    try:
+        response = requests.get(link)
+        if response.status_code == 200:
+            print(f"Read the Docs link: PASS - {link}")
+            return True
+        else:
+            print(f"Read the Docs link: FAIL - Link returned status code {response.status_code}")
+            return False
+    except requests.RequestException:
+        print(f"Read the Docs link: FAIL - Unable to access {link}")
+        return False
+
 def main():
     checks = [
         check_calculator_implementation,
@@ -74,6 +99,7 @@ def main():
         check_usage_doc,
         check_sphinx_config,
         build_docs
+        check_readthedocs_link
     ]
     
     results = [check() for check in checks]
